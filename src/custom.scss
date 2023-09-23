@@ -1,0 +1,27 @@
+// Define both light and dark theme colors
+$light-primary: #6c1414;
+$dark-primary: #333333;
+
+$light-link: darkred;
+$dark-link: #e0e0e0;
+
+$light-info: #7222a3;
+$dark-info: #b1b1b1;
+
+$light-success: #b13030;
+$dark-success: #808080;
+
+// Default to Light Theme
+$primary: $light-primary;
+$link: $light-link;
+$info: $light-info;
+$success: $light-success;
+
+@import 'bulma/bulma.sass';
+
+// Define dark mode styles using a class
+body.night-mode {
+  // Override Bulma's primary color
+  --primary: #{$dark-primary};
+  // Other dark mode styles here...
+}
