@@ -13,14 +13,13 @@ export default class Navbar extends Component {
               About
             </a>
           </div>
-
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button className="button is-small is-light" onClick={this.props.toggleTheme}>
+                {/* <button className="button is-small is-light" onClick={this.props.toggleTheme}>
                   Toggle Night Mode
-                </button>
-                <a href="/portfolio/#register" className="button is-primary">
+                </button> */}
+                <a href="mailto:elsheikh.musaab@gmail.com" className="button is-primary">
                   <strong>Contact Me</strong>
                 </a>
               </div>
