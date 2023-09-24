@@ -6,10 +6,10 @@ export default class Navbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
-            <a href="/portfolio/#" className="navbar-item">
+            <a href="/#" className="navbar-item">
               Home
             </a>
-            <a href="/portfolio/#about" className="navbar-item">
+            <a href="/#about" className="navbar-item">
               About
             </a>
           </div>

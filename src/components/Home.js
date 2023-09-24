@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="columns is-vcentered" style={{paddingLeft: '20px', paddingRight: '20px'}}>
       <div className="column is-one-third">
-        <h1 className="title is-2 has-text-centered">Portfolio</h1>
+        <h1 className="has-text-centered">Portfolio</h1><br />
         {projects.map(project => (
           <button
             key={project.id}

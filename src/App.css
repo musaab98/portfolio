@@ -19,6 +19,13 @@ body, html {
   color: white;
 }
 
+h1 {
+  font-size: 2.5em;
+}
+h2 {
+  font-size: 2em;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -36,6 +43,14 @@ body, html {
 
 .custom-card-header-title {
   font-size: 1.5rem; /* Adjust as needed */
+}
+
+.two-columns-list {
+  columns: 3;
+  -webkit-columns: 3;
+  -moz-columns: 3;
+  list-style-type: none; /* To remove the bullets */
+  padding: 0;
 }
 
 /* Example of additional custom styles */
@@ -111,4 +126,37 @@ html.night-mode .card .card-header {
 body.night-mode .card .card-content, 
 html.night-mode .card .card-content {
   background-color: #212121; /* or any color slightly lighter than the main background */
+}
+
+
+
+
+
+/* ABOUT ME FORMATTING */
+.about-container {
+  max-width: 300vh;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 16pt;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  margin-right: 5vh;
+  align-self: flex-start;
+  margin-top: 5vh;
+}
+
+.about-text {
+  max-width: 125vh;
 }
