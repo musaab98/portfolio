@@ -20,7 +20,7 @@ async function getProjects(): Promise<Project[]> {
     .from('projects')
     .select('*')
     .eq('published', true)
-    .order('display_order', { ascending: true });
+    .order('priority', { ascending: true });
 
   if (error) {
     console.error('Error fetching projects:', error);
