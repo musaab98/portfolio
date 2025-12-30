@@ -1,15 +1,24 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+const EMAIL = 'elsheikh.musaab@gmail.com';
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('loading');
-    // TODO: Implement API call
-    setTimeout(() => setStatus('success'), 1000);
+export default function ContactPage() {
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const getMailtoHref = () => {
+    const su = encodeURIComponent(subject || 'Message from portfolio');
+    const body = encodeURIComponent(message || '');
+    // Open Gmail compose directly instead of mailto
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${su}&body=${body}`;
+  };
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText(EMAIL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -19,52 +28,51 @@ export default function ContactPage() {
         <p className="text-slate-400">Have a question or want to work together?</p>
       </div>
 
-      <div className="bg-slate-900 rounded-lg border border-slate-800 p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-slate-900/50 rounded-lg border border-slate-800 p-8">
+        <div className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">Name</label>
-            <input 
-              type="text" 
-              id="name" 
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition" 
-              placeholder="Your name"
-              required
+            <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-2">Subject</label>
+            <input
+              id="subject"
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+              placeholder="Subject"
             />
           </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition" 
-              placeholder="you@example.com"
-              required
-            />
-          </div>
+
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
-            <textarea 
-              id="message" 
-              rows={6}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition resize-none"
+            <textarea
+              id="message"
+              rows={8}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition resize-none"
               placeholder="Your message..."
-              required
             />
           </div>
-          <button 
-            type="submit" 
-            disabled={status === 'loading'}
-            className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-700 text-white px-6 py-3 rounded-lg transition-colors font-medium"
+
+          <a
+            href={getMailtoHref()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg transition-colors font-medium text-center cursor-pointer"
           >
-            {status === 'loading' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Send Message'}
+            Send Message
+          </a>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <button
+            type="button"
+            onClick={copyEmail}
+            className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm font-medium cursor-pointer"
+          >
+            {copied ? 'Copied!' : 'Alternatively, copy my email'}
           </button>
-        </form>
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabase';
 import ProjectCard from '@/components/ProjectCard';
 
 interface Project {
@@ -7,21 +7,20 @@ interface Project {
   title: string;
   slug: string;
   description: string;
-  tags: string[];
-  demo_url?: string;
-  repo_url?: string;
+  technologies: string[];
+  project_url?: string;
   image_url?: string;
   published: boolean;
 }
 
-export const revalidate = 60; // ISR: revalidate every 60 seconds
+export const revalidate = 60;
 
 async function getProjects(): Promise<Project[]> {
   const { data, error } = await supabase
     .from('projects')
     .select('*')
     .eq('published', true)
-    .order('order', { ascending: true });
+    .order('display_order', { ascending: true });
 
   if (error) {
     console.error('Error fetching projects:', error);
