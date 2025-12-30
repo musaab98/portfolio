@@ -13,6 +13,7 @@ interface Project {
   image_url: string;
   published: boolean;
   display_order: number;
+  priority: number;
 }
 
 export default function AdminProjects() {
@@ -32,7 +33,7 @@ export default function AdminProjects() {
     const { data } = await supabase
       .from('projects')
       .select('*')
-      .order('display_order', { ascending: true });
+      .order('priority', { ascending: true });
     
     setProjects(data || []);
     setLoading(false);
@@ -53,6 +54,7 @@ export default function AdminProjects() {
         image_url: editing.image_url || null,
         published: editing.published,
         display_order: projects.length,
+        priority: editing.priority,
       });
     } else {
       await supabase
@@ -65,6 +67,7 @@ export default function AdminProjects() {
           project_url: editing.project_url || null,
           image_url: editing.image_url || null,
           published: editing.published,
+          priority: editing.priority,
         })
         .eq('id', editing.id);
     }
@@ -104,6 +107,7 @@ export default function AdminProjects() {
       image_url: '',
       published: false,
       display_order: 0,
+      priority: 999,
     });
     setIsNew(true);
     setTechInput('');
@@ -235,6 +239,18 @@ export default function AdminProjects() {
                 />
               </div>
               
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Priority (lower = first)</label>
+                <input
+                  type="number"
+                  value={editing.priority}
+                  onChange={(e) => setEditing({ ...editing, priority: parseInt(e.target.value) || 0 })}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  placeholder="1"
+                  min="0"
+                />
+              </div>
+              
               <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
@@ -307,7 +323,14 @@ export default function AdminProjects() {
                     {project.published ? 'Unpublish' : 'Publish'}
                   </button>
                   <button
-                    onClick={() => { setEditing(project); setIsNew(false); }}
+                    onClick={() => { 
+                      setEditing({
+                        ...project,
+                        project_url: project.project_url || '',
+                        image_url: project.image_url || '',
+                      }); 
+                      setIsNew(false); 
+                    }}
                     className="px-3 py-1 text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 rounded transition-colors cursor-pointer"
                   >
                     Edit
